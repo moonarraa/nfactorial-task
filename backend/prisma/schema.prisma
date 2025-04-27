@@ -1,0 +1,26 @@
+// backend/prisma/schema.prisma
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ShoppingList {
+  id        String   @id @default(uuid())
+  name      String?
+  createdAt DateTime @default(now())
+  items     Item[]
+}
+
+model Item {
+  id        String   @id @default(uuid())
+  text      String
+  bought    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  list      ShoppingList @relation(fields: [listId], references: [id])
+  listId    String
+}
