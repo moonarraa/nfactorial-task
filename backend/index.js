@@ -12,7 +12,7 @@ const io = new Server(httpServer, {
   cors: { origin: '*' }
 });
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 /*
@@ -27,7 +27,9 @@ io.on('connection', socket => {
     Создание нового списка
 */
 app.post('/lists', async (req, res) => {
-  const list = await prisma.shoppingList.create({});
+  const list = await prisma.shoppingList.create({
+    data:{}
+  });
   res.json(list);
 });
 
